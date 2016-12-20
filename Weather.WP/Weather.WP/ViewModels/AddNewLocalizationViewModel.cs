@@ -86,7 +86,7 @@ namespace Weather.WP.ViewModels
             TextBox textBox = sender as TextBox;
             _searchingCity = textBox.Text;
 
-            if (!Regex.IsMatch(textBox.Text, @"^[a-zA-Z ]+$"))
+            if (!Regex.IsMatch(textBox.Text, @"^[a-zA-Z ]+$") && _searchingCity.Length > 0)
             {
                 _searchingCity = _searchingCity.Remove(_searchingCity.Length - 1);
                 textBox.Text = textBox.Text.Remove(textBox.Text.Length - 1);
