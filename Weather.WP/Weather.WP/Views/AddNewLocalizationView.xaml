@@ -1,0 +1,47 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Weather.WP.Views.AddNewLocalizationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+    xmlns:local="clr-namespace:Weather.WP"
+    xmlns:controls="clr-namespace:Weather.WP.Controls"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="10,17,10,28">
+            <TextBlock Text="Wyszukaj miasto" Margin="9,0,0,0" FontSize="26"/>
+            <TextBox Text="{Binding CityName, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                     cal:Message.Attach="[Event TextChanged] = [Action OnTextBoxTextChanged($source)]" />
+            <ProgressBar IsIndeterminate="True" Foreground="{StaticResource BlueBrush}" Width="440" Height="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                         Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,15,10,15"/>
+        </StackPanel>
+        
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="10,0,10,0">
+            <phone:LongListSelector ItemsSource="{Binding Cities}" >
+                <phone:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10,10,10,20" cal:Message.Attach="[Event Tap] = [Action OnTap($datacontext)]">
+                            <controls:CityControl City="{Binding}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </phone:LongListSelector.ItemTemplate>
+            </phone:LongListSelector>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
